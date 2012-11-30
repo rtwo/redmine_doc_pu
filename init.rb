@@ -4,7 +4,7 @@ require 'redmine'
 # Patches to the Redmine core. Will not work in development mode
 require_dependency 'wiki_page_patch'
 
-RAILS_DEFAULT_LOGGER.info "Loading DocPu plugin..."
+::Rails.logger.info "Loading DocPu plugin..."
 TEMPLATE_DIR = "./vendor/plugins/redmine_doc_pu/templates"
 
 Redmine::Plugin.register :redmine_doc_pu do
