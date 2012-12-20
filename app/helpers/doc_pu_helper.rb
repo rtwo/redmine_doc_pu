@@ -30,7 +30,7 @@ module DocPuHelper
     end
     
     def acronym_info_tag(str)
-        return "<acronym title=\"#{str}\">(?)</acronym>"
+        "<acronym title=\"#{str}\">(?)</acronym>"
     end
     
     def flash_msg(err)
@@ -39,5 +39,4 @@ module DocPuHelper
         return "warning" if err.warning_lines.size != 0
         return "notice"
     end
-    
 end
