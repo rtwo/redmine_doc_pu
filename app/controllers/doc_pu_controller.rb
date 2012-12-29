@@ -35,7 +35,7 @@ class DocPuController < ApplicationController
   # Edit document
   def edit
     @doc = DocPuDocument.find(params[:id])      
-    if request.post?
+    if request.put?
       # Update document
       @doc.attributes = checkbox_to_boolean(params[:doc])
       flash[:notice] = t(:flash_document_updated) if @doc.save
