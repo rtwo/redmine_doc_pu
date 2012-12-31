@@ -5,11 +5,11 @@ require 'redmine'
 require_dependency 'wiki_page_patch'
 
 ::Rails.logger.info "Loading DocPu plugin..."
-TEMPLATE_DIR = "./vendor/plugins/redmine_doc_pu/templates" 
+TEMPLATE_DIR = "./plugins/redmine_doc_pu/templates" 
 
 Redmine::Plugin.register :redmine_doc_pu do 
-  name "Redmine DocPu plugin"
-  version "0.0.2"
+  name "Redmine DocPu plugin (a+c branch)"
+  version "0.1.0"
   description "A wiki export and document publishing tool, sponsored by: ATV-Elektronik"
   author "Christian Raschko"
   url "http://atv-elektronik.co.at/"

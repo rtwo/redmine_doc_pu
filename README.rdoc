@@ -1,3 +1,17 @@
+== NOTICE
+
+This is just a port of the original redmine doc_pu plugin for latex publishing
+of wiki pages. We use and love the possibility to produce perfect looking PDF
+pages from wiki markup but also wanted to stay up-to-date with the latest
+redmine versions which depend on rails 3.X. Therefor we put our efforts
+into this fork of the original plugin which seems to be not longer supported.
+
+We only care for verions: redmine > 2, rails > 3 and ruby > 1.9. 
+
+This port is in an early stage and work in progress. Once it becomes functional
+we will maintain it. 
+
 = doc_pu
 
-A wiki export and document publishing tool, sponsored by: ATV-Elektronik (http://atv-elektronik.co.at/)
+A wiki export and document publishing tool, sponsored by: ATV-Elektronik
+(http://atv-elektronik.co.at/)
