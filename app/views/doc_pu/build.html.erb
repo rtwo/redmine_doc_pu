@@ -23,10 +23,10 @@
 
 <p>
 <%= button_to t(:button_build),
-    :url => {:controller => :doc_pu, :action => :build_remote, :project_id => @project, :id => @doc},
+    {:controller => :doc_pu, :action => :build_remote, :project_id => @project, :id => @doc},
     :update => "log-result";
 %><%= button_to t(:button_clean),
-    :url => {:controller => :doc_pu, :action => :clean_remote, :project_id => @project, :id => @doc},
+    {:controller => :doc_pu, :action => :clean_remote, :project_id => @project, :id => @doc},
     :update => "log-result";
 %>
 <acronym title="<%= t(:info_build_latex_multiple_times)%>">(?)</acronym>
