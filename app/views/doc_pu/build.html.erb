@@ -1,3 +1,7 @@
+<% content_for :header_tags do %>
+  <%= javascript_include_tag( 'doc_pu', :plugin => 'redmine_doc_pu') %>
+<% end %>
+
 <div class="contextual">
   <%= link_to_if_authorized t(:link_view_document), {
     :controller => :doc_pu, :action => :open, :project_id => @project,
@@ -22,11 +26,11 @@
 </div>
 
 <p>
-<%= button_to t(:button_build),
+<%= link_to t(:button_build),
     {:controller => :doc_pu, :action => :build_remote, :project_id => @project, :id => @doc},
-    :update => "log-result";
-%><%= button_to t(:button_clean),
+    { :class => 'doc-pu-button', :remote => true }
+%><%= link_to t(:button_clean),
     {:controller => :doc_pu, :action => :clean_remote, :project_id => @project, :id => @doc},
-    :update => "log-result";
+    { :class => 'doc-pu-button', :remote => true }
 %>
 <acronym title="<%= t(:info_build_latex_multiple_times)%>">(?)</acronym>
