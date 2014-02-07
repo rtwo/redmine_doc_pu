@@ -28,9 +28,9 @@
 <p>
 <%= link_to t(:button_build),
     {:controller => :doc_pu, :action => :build_remote, :project_id => @project, :id => @doc},
-    { :class => 'doc-pu-button', :remote => true }
+    { :class => 'doc-pu-button icon icon-package', :remote => true }
 %><%= link_to t(:button_clean),
     {:controller => :doc_pu, :action => :clean_remote, :project_id => @project, :id => @doc},
-    { :class => 'doc-pu-button', :remote => true }
+    { :class => 'doc-pu-button icon icon-del', :remote => true }
 %>
 <acronym title="<%= t(:info_build_latex_multiple_times)%>">(?)</acronym>
