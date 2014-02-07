@@ -29,7 +29,7 @@
                         <td><%= doc.name %></td>
                     <% end %>
                     <td align="center"><%= link_to doc.user.name, {:controller => :users, :action => :show, :id => doc.user} %></td>
-                    <td><%= print_wiki_pages doc.doc_pu_wiki_pages, doc %></td>
+                    <td><%= print_wiki_pages(doc.doc_pu_wiki_pages, doc).html_safe %></td>
                     <td align="center"><%= doc.template %></td>
                     <td align="center"><%= format_date doc.created_at %></td>
                     <td align="center"><%= format_date doc.built_at %></td>
