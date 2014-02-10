@@ -20,16 +20,16 @@
 <h2><%=t :heading_build_document %></h2>
 
 <div id="log-result">
-  <div style="height:400px" class="box autoscroll">
+  <div style="height:30em" class="box autoscroll">
   </div>
-  <div class="flash warning"><%=t :text_press_build_button %></div>
+  <!--span><%=t :text_press_build_button %></span-->
 </div>
 
 <p>
 <%= link_to t(:button_build),
     {:controller => :doc_pu, :action => :build_remote, :project_id => @project, :id => @doc},
     { :class => 'doc-pu-button', :remote => true }
-%><%= link_to t(:button_clean),
+%>  or  <%= link_to t(:button_clean),
     {:controller => :doc_pu, :action => :clean_remote, :project_id => @project, :id => @doc},
     { :class => 'doc-pu-button', :remote => true }
 %>
