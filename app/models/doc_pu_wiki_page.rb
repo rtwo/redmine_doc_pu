@@ -15,7 +15,7 @@ class DocPuWikiPage < ActiveRecord::Base
   include ModuleLatexWikiPage
 
   def to_latex
-    self.chapter_name = (self.chapter_name != "" ? self.chapter_name : self.wiki_page.title)
+    self.chapter_name = (self.chapter_name != "" ? self.chapter_name : self.wiki_page.title.gsub(/_/,' ') )
     # Get document flags
     if self.use_doc_flags && !self.doc_pu_document.nil?
       ModuleLatexFlags::FLAGS.each do |m, v|
