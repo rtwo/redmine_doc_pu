@@ -8,6 +8,9 @@ class DocPuWikiPage < ActiveRecord::Base
   belongs_to :doc_pu_document
   validates_presence_of :wiki_page_id, :doc_pu_document_id
 
+  after_initialize :parse_flags_from_text 
+  before_save :save_flags_to_text 
+  
   include ModuleLatexFlags
   include ModuleLatexWikiPage
 
@@ -22,12 +25,12 @@ class DocPuWikiPage < ActiveRecord::Base
     super
   end
 
-  def after_initialize
+  def parse_flags_from_text 
     self.flags_from_str(self.flags)
     true
   end
 
-  def before_save
+  def save_flags_to_text
     self.flags = self.flags_to_str
     true
   end
