@@ -2,16 +2,21 @@ require 'latex_flags'
 
 module ModuleLatexWikiPage
 	include ModuleLatexFlags
-	
-	def to_latex()
+
+  def preprocess_wiki_page page
 		# Collect all attached images and get disk filename
-		file_sub = {}
-		self.wiki_page.attachments.each do |att|
-			unless att.content_type.match(/^image/i).nil?
-				file_sub[att.filename] = att.disk_filename
+		page.attachments.each do |att|
+			unless MIME::Types.type_for(att.filename).all? { |s| s.to_s.match(/^image/i).nil? }
+        @file_sub[att.filename] = File.join(att.disk_directory, att.disk_filename)
 			end
 		end
 		
+  end
+	
+	def to_latex()
+		@file_sub = {}
+    preprocess_wiki_page self.wiki_page
+
 		# Get version of page
 		if self.wiki_page_version == 0
 			# Get latest page
@@ -23,7 +28,7 @@ module ModuleLatexWikiPage
 		end
 		
 		# Replace alle image filenames with disk filenames
-		file_sub.each do |fn, dsk_fn|
+		@file_sub.each do |fn, dsk_fn|
 			page_txt.gsub!(fn, dsk_fn)
 		end
 		
