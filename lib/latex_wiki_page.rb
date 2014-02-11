@@ -3,7 +3,7 @@ require 'latex_flags'
 module ModuleLatexWikiPage
   include ModuleLatexFlags
 
-  def preprocess_wiki_page page
+  def get_page_text page, version = 0
     # Collect all attached images and get disk filename
     page.attachments.each do |att|
       unless MIME::Types.type_for(att.filename).all? { |s| s.to_s.match(/^image/i).nil? }
@@ -11,21 +11,28 @@ module ModuleLatexWikiPage
       end
     end
     
+    # Get version of page
+    if version == 0
+      # Get latest page
+      page_txt = String.new(page.content.text)
+    else
+      ver = page.content.versions.find(:first, :conditions => [ "version = ?", version])
+      raise ArgumentError, "Can't find Page version!" if ver.nil?
+      page_txt = String.new(ver.text)
+    end
+  
+    # process Include macro
+    page_txt.gsub!(/\{\{Include\((.*)\)\}\}/) { |p|
+      included_page = Wiki.find_page($1, :project => self.wiki_page.project)
+      get_page_text included_page
+    }
+    page_txt
   end
   
   def to_latex()
     @file_sub = {}
-    preprocess_wiki_page self.wiki_page
+    page_txt = get_page_text self.wiki_page, self.wiki_page_version
 
-    # Get version of page
-    if self.wiki_page_version == 0
-      # Get latest page
-      page_txt = String.new(self.wiki_page.content.text)
-    else
-      ver = self.wiki_page.content.versions.find(:first, :conditions => [ "version = ?", self.wiki_page_version])
-      raise ArgumentError, "Can't find Page version!" if ver.nil?
-      page_txt = String.new(ver.text)
-    end
     
     # Replace alle image filenames with disk filenames
     @file_sub.each do |fn, dsk_fn|
