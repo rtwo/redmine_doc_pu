@@ -7,7 +7,11 @@ module ModuleLatexWikiPage
     # Collect all attached images and get disk filename
     page.attachments.each do |att|
       unless MIME::Types.type_for(att.filename).all? { |s| s.to_s.match(/^image/i).nil? }
-        @file_sub[att.filename] = File.join(att.disk_directory, att.disk_filename)
+        @file_sub[att.filename] = if att.disk_directory.nil?
+          att.disk_filename                          
+        else
+          File.join(att.disk_directory, att.disk_filename)
+        end
       end
     end
     
