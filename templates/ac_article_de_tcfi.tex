@@ -1,0 +1,83 @@
+%%%
+%%% This is a _DocPu_ template file
+%%% modified for ART+COM (v0.4)
+%%%
+%%% *document class:* article, a4paper, 11pt
+%%% *language:* german
+%%% *contains:* titlepage, table of contents, list of figures, index
+%%% *special:* enable code line numbers, set default image resolution to 150 DPI
+%%%
+
+% using article default size
+\documentclass[a4paper,10pt]{article}
+
+% does not work :-(
+%    \DeclareFontFamily{OT1}{fac}{}
+%    \DeclareFontShape{OT1}{fac}{m}{n}{ <-> facr--base }{}
+%    \DeclareFontShape{OT1}{fac}{m}{it}{ <-> facri--base }{}
+%    \DeclareFontShape{OT1}{fac}{m}{sl}{ <-> facri--base }{}
+%    \DeclareFontShape{OT1}{fac}{b}{n}{ <-> facb--base }{}
+%    \DeclareFontShape{OT1}{fac}{bx}{n}{ <-> facb--base }{}
+%    \DeclareFontShape{OT1}{fac}{b}{it}{ <-> facbi--base }{}
+
+% textile required packages
+\usepackage{listings}
+\usepackage[normalem]{ulem}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{makeidx}
+\usepackage{hyperref}
+
+\usepackage{fancyhdr}
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+
+% \renewcommand{\sfdefault}{fac}
+\renewcommand*\familydefault{\sfdefault}
+
+\oddsidemargin  -0.04 cm
+\evensidemargin -0.04 cm
+\textwidth 16 cm
+\lstset{
+        basicstyle=\ttfamily,
+        numberstyle=\tiny,
+}
+\pagestyle{fancy}
+\fancyhead[LE,RO]{\slshape ART+COM AG}
+\fancyhead[LO,RE]{\slshape \rightmark}
+\fancyfoot[C]{Seite \thepage}
+
+% enable code line numbers
+% \lstset{numbers=left}
+
+% set default image resolution to 150 DPI
+\pdfimageresolution 150
+
+% titlepage macros
+\title{}
+\author{}
+\date{\today}
+
+% initialize makeindex
+\makeindex
+
+\begin{document}
+        % title on the first page
+        \maketitle
+
+        % table of contents
+        \tableofcontents
+\newpage
+        % list of figures, we don't need it
+        % \listoffigures
+
+        % input
+        \input{document.tex}
+
+        % print index, we don't need it
+%       \printindex
+        
+\end{document}
+
