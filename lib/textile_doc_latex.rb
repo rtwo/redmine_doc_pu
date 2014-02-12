@@ -3,6 +3,16 @@ require 'redcloth'
 module RedCloth::Formatters::LATEX_EX
   include RedCloth::Formatters::LATEX
   
+  # inline monospace
+  def snip(opts)
+    "{\tt #{opts[:text]}"
+  end
+
+  # inline code
+  def code(opts)
+    opts[:block] ? opts[:text] : "{\\tt #{opts[:text]}}"
+  end
+  
   def td(opts)
     opts[:text] = "\\textbf{#{opts[:text]}}" unless opts[:th].nil?
     column = @table_row.size
