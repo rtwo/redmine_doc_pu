@@ -5,12 +5,12 @@ module RedCloth::Formatters::LATEX_EX
   
   # inline monospace
   def snip(opts)
-    "{\tt #{opts[:text]}"
+    "{\tt #{escape opts[:text]}"
   end
 
   # inline code
   def code(opts)
-    opts[:block] ? opts[:text] : "{\\tt #{opts[:text]}}"
+    opts[:block] ? opts[:text] : "{\\tt #{escape opts[:text]}}"
   end
   
   def td(opts)
