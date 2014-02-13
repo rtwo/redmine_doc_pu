@@ -1,2 +1,5 @@
+<% content_for :header_tags do %>
+  <%= javascript_include_tag( 'doc_pu', :plugin => 'redmine_doc_pu') %>
+<% end %>
 <h2><%=t :heading_new_wiki_page %></h2>
 <%= render "form" %>

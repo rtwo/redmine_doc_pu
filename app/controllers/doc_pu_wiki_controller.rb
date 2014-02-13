@@ -14,6 +14,7 @@ class DocPuWikiController < ApplicationController
       results = WikiPage.joins(wiki: :project)
                 .where("CONCAT_WS(':', `projects`.`name`, `wiki_pages`.`title`) LIKE ? ", "%#{params[:term]}%")
                 .select('projects.name, wiki_pages.title')
+                .limit(10)
 
       render :json => results.map { |x| "#{x.name}:#{x.title}" }
     end
@@ -106,8 +107,9 @@ class DocPuWikiController < ApplicationController
             param[m.to_s] = (param[m.to_s] == "1")
         end
         # Lookup wiki page
-        page = Wiki.find_page(param.delete(:wiki_page))
-        param[:wiki_page_id] = page.id  
+        full_page_name = param.delete(:full_page_name)
+        page = Wiki.find_page(full_page_name)
+        param[:wiki_page_id] = page.nil? ? nil : page.id
         return param
     end
 end
