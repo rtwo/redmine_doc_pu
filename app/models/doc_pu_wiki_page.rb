@@ -25,6 +25,10 @@ class DocPuWikiPage < ActiveRecord::Base
     super
   end
 
+  def full_page_name
+    self.wiki_page ? "#{self.wiki_page.project.name}:#{self.wiki_page.title}" : nil 
+  end
+
   def parse_flags_from_text 
     self.flags_from_str(self.flags)
     true

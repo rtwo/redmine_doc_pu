@@ -62,6 +62,7 @@ module ModuleLatexDoc
   def to_latex()
     doc_txt = ""
     self.wiki_pages.each do |page|
+      raise UnauthorizedAction unless User.current.allowed_to?(:view_wiki_pages, page.wiki_page.project)  
       doc_txt += page.to_latex
     end
     return doc_txt

@@ -32,7 +32,11 @@ module ModuleLatexWikiPage
     }
     page_txt
   end
-  
+
+  def latex_label wiki_page
+    "page:#{wiki_page.project.name.gsub(' ','_')}_#{wiki_page.title.gsub(' ', '_')}"
+  end
+
   def to_latex()
     @file_sub = {}
     page_txt = get_page_text self.wiki_page, self.wiki_page_version
@@ -42,15 +46,13 @@ module ModuleLatexWikiPage
     @file_sub.each do |fn, dsk_fn|
       page_txt.gsub!(fn, dsk_fn)
     end
-    
     # Check wiki referenzes for redirects
     page_txt.gsub!(/(\s|^)\[\[(.*?)(\|(.*?)|)\]\]/i) do |m|
       ref = $2
       label = $4
-      ref = Wiki.titleize(ref)
-      redir = WikiRedirect.all(:conditions => ["title = ?", ref])[0]
-      ref = redir.redirects_to unless redir.nil?
-      " [[#{ref}|#{label}]]"
+      referenced_page = Wiki.find_page($2, :project => self.wiki_page.project)
+      ref = self.latex_label referenced_page 
+      " [[#{ref}|#{label || referenced_page.title}]]"
     end
     
     # Collect rules
@@ -67,14 +69,15 @@ module ModuleLatexWikiPage
     r = TextileDocLatex.new(page_txt)
     r.draw_table_border_latex = self.latex_table_border
     page_txt = r.to_latex(*rules)
-    
+  
+    label = "page:#{self.wiki_page.project.name.gsub(' ','_')}_#{self.wiki_page.title.gsub(' ', '_')}"
     if self.latex_add_chapter
       # Add chapter tag
-      page_txt = "\n\\chapter{#{self.chapter_name}} \\label{page:#{self.wiki_page.title}}\n" + page_txt
+      page_txt = "\n\\chapter{#{self.chapter_name}} \\label{#{self.latex_label self.wiki_page}}\n" + page_txt
     else
       # Add label to first section, if section exists
       page_txt.sub!(/\\section\{(.+)\}/i) do |m| 
-        "\\section{#{$1}}\\label{page:#{self.wiki_page.title.gsub(" ", "_")}}"
+        "\\section{#{$1}}\\label{#{self.latex_label self.wiki_page}}"
       end
     end
     

@@ -39,6 +39,7 @@ de:
   field_document: "Dokument"
   field_author: "Author"
   field_wiki_page: "Wiki Seite"
+  field_full_page_name: "Projekt:Wiki Seite"
   field_template: "Vorlage"
   field_created_at: "Erstellt am"
   field_built_at: "Generiert am"

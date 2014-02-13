@@ -39,6 +39,7 @@ en:
   field_document: "Document"
   field_author: "Author"
   field_wiki_page: "Wiki pages"
+  field_full_page_name: "Project:Wiki Page"
   field_template: "Template"
   field_created_at: "Created at"
   field_built_at: "Built at"

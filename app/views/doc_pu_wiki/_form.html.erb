@@ -14,9 +14,7 @@
       <%end%>
 
       <div class="splitcontentleft">
-        <p><%= f.select :wiki_page_id, options_from_collection_for_select(
-          @project.wiki.pages, :id, :title, @doc_pu_wiki.wiki_page_id
-        ), :required => true %></p>
+        <p><%= f.text_field :full_page_name, :size => 60 %></p>
 
       <p><%= f.text_field :chapter_name, :size => 30 %> 
         <acronym title="<%= t(:info_chapter_name)%>">(?)</acronym>

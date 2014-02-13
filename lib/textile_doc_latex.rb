@@ -81,7 +81,7 @@ module RedClothExtensionLatex
     text.gsub!(/(\s|^)\[\[(.*?)(\|(.*?)|)\]\]/i) do |m|
       var = $2
       label = $4
-      "<notextile> #{label} \\ref{page:#{var}}</notextile>"
+      "<notextile> #{label} \\autoref{#{var}}</notextile>"
     end
   end
 

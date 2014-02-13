@@ -2,13 +2,21 @@ class DocPuWikiController < ApplicationController
     unloadable
     layout "base"
     menu_item :doc_pu_menu
-    before_filter :find_project, :find_doc_pu_document
+    before_filter :find_project, :find_doc_pu_document, :except => [:list_wiki_pages]
 
     # Show all wiki pages
     def index
         @doc_pu_wikis = @doc_pu.doc_pu_wiki_pages
     end
 
+    # ajax call for autocomplete of wiki page
+    def list_wiki_pages
+      results = WikiPage.joins(wiki: :project)
+                .where("CONCAT_WS(':', `projects`.`name`, `wiki_pages`.`title`) LIKE ? ", "%#{params[:term]}%")
+                .select('projects.name, wiki_pages.title')
+
+      render :json => results.map { |x| "#{x.name}:#{x.title}" }
+    end
 
     # Create new wiki page
     def new
@@ -17,7 +25,7 @@ class DocPuWikiController < ApplicationController
         if request.post?
             # Save object
             reorder_pages(@doc_pu.doc_pu_wiki_pages.all)
-            @doc_pu_wiki = @doc_pu.doc_pu_wiki_pages.create(checkbox_to_boolean params[:doc_pu_wiki])
+            @doc_pu_wiki = @doc_pu.doc_pu_wiki_pages.create(parse_form params[:doc_pu_wiki])
             @doc_pu_wiki.wiki_page_order = get_new_page_order()
             @doc_pu_wiki.wiki_page_version = 0
             if @doc_pu_wiki.save
@@ -33,7 +41,7 @@ class DocPuWikiController < ApplicationController
       @doc_pu_wiki = DocPuWikiPage.find(params[:id])
       if request.put?
         # Update object
-        @doc_pu_wiki.attributes = checkbox_to_boolean(params[:doc_pu_wiki])
+        @doc_pu_wiki.attributes = parse_form(params[:doc_pu_wiki])
         if @doc_pu_wiki.save
           flash[:notice] = t(:flash_page_updated)
           redirect_to :controller => :doc_pu, :action => :edit, :project_id => @project, :id => @doc_pu
@@ -92,11 +100,14 @@ class DocPuWikiController < ApplicationController
         return page + 1
     end
 
-    # Convert checkbox value to boolean
-    def checkbox_to_boolean(param)
+    def parse_form(param)
+        # Convert checkbox value to boolean
         ModuleLatexFlags::FLAGS.each do |m, v|
             param[m.to_s] = (param[m.to_s] == "1")
         end
+        # Lookup wiki page
+        page = Wiki.find_page(param.delete(:wiki_page))
+        param[:wiki_page_id] = page.id  
         return param
     end
 end
