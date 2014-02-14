@@ -79,8 +79,8 @@ module ModuleLatexWikiPage
       page_txt = "\n\\chapter{#{self.chapter_name}} \\label{#{self.latex_label self.wiki_page}}\n" + page_txt
     else
       # Add label to first section, if section exists
-      page_txt.sub!(/\\section\{(.+)\}/i) do |m| 
-        "\\section{#{$1}}\\label{#{self.latex_label self.wiki_page}}"
+      page_txt.sub!(/\\(.*section)\{(.+)\}/i) do |m| 
+        "\\#{$1}{#{$2}}\\label{#{self.latex_label self.wiki_page}}"
       end
     end
     
