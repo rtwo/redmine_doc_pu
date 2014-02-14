@@ -51,8 +51,12 @@ module ModuleLatexWikiPage
       ref = $2
       label = $4
       referenced_page = Wiki.find_page($2, :project => self.wiki_page.project)
-      ref = self.latex_label referenced_page 
-      " [[#{ref}|#{label || referenced_page.title}]]"
+      if referenced_page
+        ref = self.latex_label referenced_page 
+        " [[#{ref}|#{label || referenced_page.pretty_title}]]"
+      else
+        " #{$2}"
+      end
     end
     
     # Collect rules
