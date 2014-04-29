@@ -29,17 +29,18 @@ module RedCloth::Formatters::LATEX_EX
   end
 
   def table_close(opts)
-    #output  = "\\begin{table}[H]\n"
-    #output << "  \\centering\n"
+    output  = "\\begin{table}[H]\n"
+    output << "  \\centering\n"
     cols = "X" * @table[0].size if not draw_table_border_latex
     cols = "|" + "L|" * @table[0].size if draw_table_border_latex
-    output = "\\begin{tabulary}{\\textwidth}{ #{cols} }\n"
+    output << "\\begin{tabulary}{\\textwidth}{ #{cols} }\n"
     output << " \\hline \n" if draw_table_border_latex
     @table.each do |row|
       hline = (draw_table_border_latex ? "\\hline" : "")
       output << "  #{row.join(" & ")} \\\\ #{hline} \n"
     end
     output << "\\end{tabulary}\n"
+    output << "\\end{table}\n"
     output
   end
 
