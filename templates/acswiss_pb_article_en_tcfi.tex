@@ -3,7 +3,7 @@
 %%% modified for ART+COM (v0.4.6)
 %%%
 %%% *document class:* article, a4paper, 10pt, twoside
-%%% *language:* german
+%%% *language:* english
 %%% *contains:* titlepage, table of contents, list of figures, index
 %%% *special:* enable code line numbers, set default image resolution to 150 DPI
 %%%
@@ -13,7 +13,6 @@
 
 % acswiss
 \usepackage[T1]{fontenc}
-% \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
 % \usepackage[standard-baselineskips]{cmbright}
 \usepackage[sf]{acswiss}
@@ -33,6 +32,7 @@
 \usepackage{titlesec}
 \usepackage{fancyhdr}
 \usepackage{tabulary}
+\usepackage{multirow}
 
 
 \DeclareUnicodeCharacter{03BC}{\textmu}
@@ -53,7 +53,7 @@
 \pagestyle{fancy}
 \fancyhead[LE,RO]{\slshape ART+COM AG}
 \fancyhead[LO,RE]{\slshape \rightmark}
-\fancyfoot[C]{Seite \thepage}
+\fancyfoot[C]{Page \thepage}
 
 % enable code line numbers
 % \lstset{numbers=left}
