@@ -10,7 +10,7 @@ class LatexOutputParser
   def parse(lines)
     self.reset()
     lines.each do |line|
-      parse_line(line)
+      parse_line(line.encode!('UTF-8', 'UTF-8', :invalid => :replace))
     end
   end
   
