@@ -12,6 +12,14 @@ module RedCloth::Formatters::LATEX_EX
   def code(opts)
     opts[:block] ? opts[:text] : "{\\tt #{escape(opts[:text]).gsub(/\//, '\\slash{}')}}"
   end
+
+  def table_close(opts)
+     if use_tabulary
+         table_close_tabulary(opts)
+     else
+         table_close_tabular(opts)
+     end
+  end
   
   def td(opts)
     opts[:text] = "\\textbf{#{opts[:text]}}" unless opts[:th].nil?
@@ -28,7 +36,7 @@ module RedCloth::Formatters::LATEX_EX
     return ""
   end
 
-  def table_close(opts)
+  def table_close_tabulary(opts)
     output  = "\\begin{table}[H]\n"
     output << "  \\centering\n"
     cols = "X" * @table[0].size if not draw_table_border_latex
@@ -40,6 +48,23 @@ module RedCloth::Formatters::LATEX_EX
       output << "  #{row.join(" & ")} \\\\ #{hline} \n"
     end
     output << "\\end{tabulary}\n"
+    output << "\\end{table}\n"
+    output
+  end
+
+
+  def table_close_tabular(opts)
+    output  = "\\begin{table}[H]\n"
+    output << "  \\centering\n"
+    cols = "l" * @table[0].size if not draw_table_border_latex
+    cols = "|" + "l|" * @table[0].size if draw_table_border_latex
+    output << "\\begin{tabular}{ #{cols} }\n"
+    output << " \\hline \n" if draw_table_border_latex
+    @table.each do |row|
+      hline = (draw_table_border_latex ? "\\hline" : "")
+      output << "  #{row.join(" & ")} \\\\ #{hline} \n"
+    end
+    output << "\\end{tabular}\n"
     output << "\\end{table}\n"
     output
   end
@@ -130,7 +155,7 @@ end
 
 
 class TextileDocLatex < RedCloth::TextileDoc
-  attr_accessor :draw_table_border_latex
+  attr_accessor :draw_table_border_latex, :use_tabulary
   
   def to_latex( *rules )
     apply_rules(rules)

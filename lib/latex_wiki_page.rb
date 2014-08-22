@@ -72,6 +72,7 @@ module ModuleLatexWikiPage
     # Convert page to latex
     r = TextileDocLatex.new(page_txt)
     r.draw_table_border_latex = self.latex_table_border
+    r.use_tabulary = self.latex_tabulary
     page_txt = r.to_latex(*rules)
   
     if self.latex_add_chapter

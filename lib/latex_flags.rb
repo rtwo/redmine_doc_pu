@@ -1,23 +1,24 @@
 module ModuleLatexFlags
 
-  # Latex flags
-  FLAGS = {
-    :latex_add_chapter => false,
-    :latex_remove_macro => true,
-    :latex_code => true,
-    :latex_page_ref => true,
-    :latex_footnote => true,
-    :latex_index_emphasis => true,
-    :latex_index_importance => true,
-    :latex_table_border => true,
-    :latex_image_ref => false
-  }
-  
-  
-  # Create flag attributes
-  ModuleLatexFlags::FLAGS.each do |m, v|
-    attr_accessor m
-  end
+	# Latex flags
+	FLAGS = {
+		:latex_add_chapter => false,
+		:latex_remove_macro => true,
+		:latex_code => true,
+		:latex_page_ref => true,
+		:latex_footnote => true,
+		:latex_index_emphasis => true,
+		:latex_index_importance => true,
+		:latex_table_border => true,
+		:latex_image_ref => false,
+		:latex_tabulary => true
+	}
+
+
+	# Create flag attributes
+	ModuleLatexFlags::FLAGS.each do |m, v|
+		attr_accessor m
+	end
 
   
   # Serialize flags
