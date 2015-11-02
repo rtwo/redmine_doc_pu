@@ -10,7 +10,7 @@ class DocPuController < ApplicationController
 
   # Show all documents
   def index
-    @documents = DocPuDocument.find_all_by_project_id(@project)
+    @documents = DocPuDocument.where(project_id: @project).all
   end
 
 
@@ -34,12 +34,12 @@ class DocPuController < ApplicationController
 
   # Edit document
   def edit
-    @doc = DocPuDocument.find(params[:id])      
+    @doc = DocPuDocument.find(params[:id])
     if request.put?
       # Update document
       @doc.attributes = checkbox_to_boolean(params[:doc])
       flash[:notice] = t(:flash_document_updated) if @doc.save
-    end 
+    end
 
     # Create template list and info
     @templates = DocPuTemplates.new(Rails.root.join(Setting.plugin_redmine_doc_pu["template_dir"]))

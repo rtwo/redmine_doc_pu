@@ -6,14 +6,14 @@ class DocPuDocument < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :project
-  has_many :doc_pu_wiki_pages, :dependent => :destroy, :order => "wiki_page_order"
+  has_many :doc_pu_wiki_pages, :dependent => :destroy
 
   validates_presence_of :name, :template, :user_id, :project_id
   validates_uniqueness_of :name
 
-  after_initialize :parse_flags_from_text 
-  before_save :save_flags_to_text 
-  
+  after_initialize :parse_flags_from_text
+  before_save :save_flags_to_text
+
   include ModuleLatexFlags
   include ModuleLatexDoc
 
@@ -31,7 +31,7 @@ class DocPuDocument < ActiveRecord::Base
     self.doc_pu_wiki_pages.all
   end
 
-  def parse_flags_from_text 
+  def parse_flags_from_text
     self.flags_from_str(self.doc_flags)
   end
 
