@@ -8,9 +8,11 @@ class DocPuWikiPage < ActiveRecord::Base
   belongs_to :doc_pu_document
   validates_presence_of :wiki_page_id, :doc_pu_document_id
 
-  after_initialize :parse_flags_from_text 
-  before_save :save_flags_to_text 
-  
+  after_initialize :parse_flags_from_text
+  before_save :save_flags_to_text
+
+  default_scope { order('wiki_page_order ASC') }
+
   include ModuleLatexFlags
   include ModuleLatexWikiPage
 
@@ -26,10 +28,10 @@ class DocPuWikiPage < ActiveRecord::Base
   end
 
   def full_page_name
-    self.wiki_page ? "#{self.wiki_page.project.name}:#{self.wiki_page.title}" : nil 
+    self.wiki_page ? "#{self.wiki_page.project.name}:#{self.wiki_page.title}" : nil
   end
 
-  def parse_flags_from_text 
+  def parse_flags_from_text
     self.flags_from_str(self.flags)
     true
   end

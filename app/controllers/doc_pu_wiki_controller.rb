@@ -53,10 +53,11 @@ class DocPuWikiController < ApplicationController
 
     # Edit page order
     def edit_order
-        ordered_wikis = @doc_pu.doc_pu_wiki_pages.all
+        ordered_wikis = @doc_pu.doc_pu_wiki_pages.all.to_a
         wiki = DocPuWikiPage.find(params[:id])
         move_to = params[:doc_pu_wiki][:move_to]
         ordered_wikis.delete(wiki)
+
         case move_to
             when "highest" then ordered_wikis.insert(0, wiki)
             when "lowest" then ordered_wikis.insert(-1, wiki)
